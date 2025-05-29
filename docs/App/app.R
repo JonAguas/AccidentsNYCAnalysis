@@ -874,7 +874,7 @@ server <- function(input, output, session) {
       rect_fill = FALSE,
       main = "Dendrograma de los Distritos",
       cex = 0.7,
-      color_labels_by_k = TRUE,
+      color_labels_by_k = TRUE
     ) + 
     theme_nyc()
   })
