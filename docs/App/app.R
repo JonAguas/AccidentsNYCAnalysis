@@ -560,7 +560,7 @@ server <- function(input, output, session) {
       end_pct <- (end_days / total_days) * 100
       width_pct <- end_pct - start_pct
       
-      años <- seq(year(fecha_min), year(fecha_max), by = 1)
+      anos <- seq(year(fecha_min), year(fecha_max), by = 1)
       
       tagList(
         div("Línea temporal:",
@@ -571,10 +571,10 @@ server <- function(input, output, session) {
             
             div(style = "position: absolute; top: 30px; left: -1%; width: 97%; height: 2px; background-color: #000000;"),
 
-            lapply(seq_along(años), function(i) {
-              pct_pos <- (as.numeric(as.Date(paste0(años[i], "-01-01")) - fecha_min) / total_days) * 100
+            lapply(seq_along(anos), function(i) {
+              pct_pos <- (as.numeric(as.Date(paste0(anos[i], "-01-01")) - fecha_min) / total_days) * 100
               left_pos <- paste0(3 + pct_pos * 0.94, "%")
-              label <- if (años[i] %% 2 == 0) as.character(años[i]) else NULL
+              label <- if (anos[i] %% 2 == 0) as.character(anos[i]) else NULL
               
               tagList(
                 div(style = paste0("position: absolute; left: ", left_pos, 
