@@ -87,7 +87,9 @@ theme_nyc <- function() {
 }
 
 ui <- tagList(
+  
   tags$head(
+    tags$meta(charset = "UTF-8"),
     tags$style(HTML("
     /* Estilo del título */
     .main-title {
