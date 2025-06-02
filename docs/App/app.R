@@ -17,6 +17,7 @@ library(plotly)
 library(ggiraph)
 library(gdtools)
 library(gfonts)
+library(scales)
 
 data_sampled <- read.csv("data_sampled.csv")
 
@@ -921,45 +922,59 @@ server <- function(input, output, session) {
     count(CAUSE, name = "FREQUENCY") |>
     arrange(desc(FREQUENCY))
   
+  
+  # Analisis jerarquico causas
+  clust_causes <- reactive({
+    distm <- stringdistmatrix(causes_cleaned$CAUSE,
+                              causes_cleaned$CAUSE,
+                              method = "cosine") 
+    
+    rownames(distm) <- causes_cleaned$CAUSE
+    colnames(distm) <- causes_cleaned$CAUSE
+    
+    hc    <- hclust(as.dist(distm), method = "complete")
+    k     <- input$k_cau
+    cl    <- cutree(hc, k = k)
+    # paleta de k colores con NOMBRES = cluster ids
+    pal   <- hue_pal()(k)
+    names(pal) <- as.character(1:k)
+    list(hc = hc, distm = distm, cl = cl, pal = pal)
+  })
+  
   output$dendrogram_plot_causes <- renderPlot({
-    dist_matrix <- stringdistmatrix(causes_cleaned$CAUSE, causes_cleaned$CAUSE, method = "cosine")
-    rownames(dist_matrix) <- causes_cleaned$CAUSE
-    colnames(dist_matrix) <- causes_cleaned$CAUSE
-
-    hc <- hclust(as.dist(dist_matrix), method = "complete")
-
+    d <- clust_causes()
     fviz_dend(
-      x = hc,
-      k = input$k_cau,
-      k_colors = c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728",
-                   "#9467bd", "#8c564b", "#e377c2", "#7f7f7f"),
-      color_labels_by_k = TRUE,
-      rect = TRUE,
-      rect_fill = TRUE,
-      cex = 0.5,
-      main = "Dendrograma de las Causas",
-      xlab = "Causas",
-      ylab = "Distancia",
-      sub = ""
-    ) +
-      theme_nyc()
+      x                = d$hc,
+      k                = input$k_cau,
+      group            = d$cl,        # <-- asigno clusters explícitamente
+      k_colors         = d$pal,       # <-- uso la misma paleta NAMED
+      color_labels_by_k= TRUE,
+      rect             = TRUE,
+      rect_fill        = TRUE,
+      cex              = 0.5,
+      horiz            = TRUE, 
+      main             = "Dendrograma de las Causas",
+      xlab             = "Causas",
+      ylab             = "Distancia",
+      sub              = ""
+    ) + theme_nyc()
   })
   
   output$silhouette_plot_causes <- renderPlot({
-    dist_matrix <- stringdistmatrix(causes_cleaned$CAUSE, causes_cleaned$CAUSE, method = "cosine")
-    rownames(dist_matrix) <- causes_cleaned$CAUSE
-    colnames(dist_matrix) <- causes_cleaned$CAUSE
-    hc <- hclust(as.dist(dist_matrix), method = "complete")
-    
-    k <- input$k_cau
-    clusters <- cutree(hc, k = k)
-
-    sil <- silhouette(clusters, dist(as.dist(dist_matrix)))
-
-    fviz_silhouette(sil) +
-      ggtitle(paste("Índice de Silueta para k =", k)) +
-      theme_nyc()
+    d <- clust_causes()
+    sil.obj <- cluster::silhouette(d$cl, as.dist(d$distm))
+    # la función de factoextra te lo dibuja directo y usa la paleta que le pases:
+    factoextra::fviz_silhouette(
+      sil.obj,
+      palette = d$pal,               # <-- misma paleta
+      ggtheme = theme_nyc()
+    ) +
+      labs(
+        title = paste("Índice de Silueta para k =", input$k_cau),
+        y     = "Anchura de Silueta"
+      )
   })
+  
   
   
   output$causes_table <- renderDT({
