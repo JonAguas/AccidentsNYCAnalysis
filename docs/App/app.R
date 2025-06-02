@@ -412,6 +412,8 @@ ui <- tagList(
 
 server <- function(input, output, session) {
   
+  cat(">>> Sys.getlocale(): ", Sys.getlocale(), "\n")
+  
   observeEvent(input$select_all_freq, {
     updateCheckboxGroupInput(session, "borough_freq", selected = borough_choices)
   })
