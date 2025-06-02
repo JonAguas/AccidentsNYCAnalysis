@@ -19,6 +19,14 @@ library(gdtools)
 library(gfonts)
 library(scales)
 
+# 1) Forzar a que R use C.UTF-8 en el servidor
+Sys.setenv(LANG = "C.UTF-8")               # fuerza el entorno de idioma
+Sys.setlocale("LC_CTYPE", "C.UTF-8")       # para que R interprete strings en UTF-8
+Sys.setlocale("LC_COLLATE", "C.UTF-8")     # opcional: ordenamientos en UTF-8
+Sys.setlocale("LC_TIME", "C.UTF-8")        # opcional: fechas/hora en UTF-8
+options(encoding = "UTF-8")
+
+
 data_sampled <- read.csv("data_sampled.csv")
 
 data_sampled <- data_sampled |> 
