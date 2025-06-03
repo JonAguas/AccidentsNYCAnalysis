@@ -142,7 +142,7 @@ ui <- tagList(
                    "main_view_viz",
                    "Seleccionar vista:",
                    choices = c(
-                     "Frecuencia de Accidentes 🚦" = "freq",
+                     "Frecuencia de Accidentes🚦" = "freq",
                      "Frecuencia de Accidentes por Distrito 🏙️" = "freq_bar",
                      "Heridos vs Muertos 💀 " = "var",
                      "Frecuencia de Causas 🚑" = "causes"
