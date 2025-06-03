@@ -1,4 +1,4 @@
-Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+Sys.setlocale("LC_ALL", "es_ES.utf8")
 
 
 library(shiny)
