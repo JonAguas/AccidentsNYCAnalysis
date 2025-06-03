@@ -2,7 +2,6 @@ Sys.setenv(LANG = "es_ES.utf8")
 Sys.setlocale("LC_ALL", "es_ES.utf8")
 Sys.setlocale("LC_CTYPE", "es_ES.utf8")
 
-
 library(shiny)
 library(shinythemes)
 library(bslib)
@@ -92,6 +91,10 @@ theme_nyc <- function() {
 }
 
 ui <- tagList(
+  tags$h3("Diagnóstico de locale y codificación"),
+  verbatimTextOutput("show_locale"),
+  verbatimTextOutput("show_session_info"),
+  hr(),
   
   tags$head(
     tags$meta(charset = "UTF-8"),
@@ -416,6 +419,19 @@ ui <- tagList(
 
 
 server <- function(input, output, session) {
+  
+  # 1) Mostrar en UI qué locale tiene R
+  output$show_locale <- renderPrint({
+    Sys.getlocale()
+  })
+  # 2) Mostrar sesión completa (para ver LANG, etc.)
+  output$show_session_info <- renderPrint({
+    sessionInfo()
+  })
+  # 3) Mostrar la selección del selectInput
+  output$sel <- renderPrint({
+    paste0("Elegiste: ", input$test_choice)
+  })
   
   observeEvent(input$select_all_freq, {
     updateCheckboxGroupInput(session, "borough_freq", selected = borough_choices)
