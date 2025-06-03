@@ -20,16 +20,16 @@ library(gfonts)
 library(scales)
 
 # Forzar a que R use C.UTF-8 en el servidor
-Sys.setenv(LANG = "C.UTF-8")
-Sys.setlocale("LC_CTYPE", "C.UTF-8")
-Sys.setlocale("LC_COLLATE", "C.UTF-8")
-Sys.setlocale("LC_TIME", "C.UTF-8")
-Sys.setlocale("LC_NUMERIC", "C.UTF-8")
-Sys.setlocale("LC_MONETARY", "C.UTF-8")
-Sys.setlocale("LC_MESSAGES", "C.UTF-8")
-Sys.setlocale("LC_PAPER", "C.UTF-8")
-Sys.setlocale("LC_MEASUREMENT", "C.UTF-8")
-options(encoding = "UTF-8")
+# Sys.setenv(LANG = "C.UTF-8")
+# Sys.setlocale("LC_CTYPE", "C.UTF-8")
+# Sys.setlocale("LC_COLLATE", "C.UTF-8")
+# Sys.setlocale("LC_TIME", "C.UTF-8")
+# Sys.setlocale("LC_NUMERIC", "C.UTF-8")
+# Sys.setlocale("LC_MONETARY", "C.UTF-8")
+# Sys.setlocale("LC_MESSAGES", "C.UTF-8")
+# Sys.setlocale("LC_PAPER", "C.UTF-8")
+# Sys.setlocale("LC_MEASUREMENT", "C.UTF-8")
+# options(encoding = "UTF-8")
 
 data_sampled <- read.csv("data_sampled.csv")
 
@@ -424,8 +424,6 @@ ui <- tagList(
 
 server <- function(input, output, session) {
   
-  cat(">>> Sys.getlocale(): ", Sys.getlocale(), "\n")
-  
   observeEvent(input$select_all_freq, {
     updateCheckboxGroupInput(session, "borough_freq", selected = borough_choices)
   })
@@ -659,11 +657,11 @@ server <- function(input, output, session) {
     if (input$graph_type == "bar") {
       p <- p + geom_bar(stat = "identity", fill = "#1F3B73", alpha = 0.8)
     } else if (input$graph_type == "line") {
-      p <- p + geom_line(color = "#1F3B73", size = 1.2) +
+      p <- p + geom_line(color = "#1F3B73", linewidth = 1.2) +
         geom_point(color = "#FF4C4C", size = 2)
     } else {
       p <- p + geom_bar(stat = "identity", fill = "#1F3B73", alpha = 0.5) +
-        geom_line(color = "#1F3B73", size = 1.2) +
+        geom_line(color = "#1F3B73", linewidth = 1.2) +
         geom_point(color = "#FF4C4C", size = 2)
     }
 
