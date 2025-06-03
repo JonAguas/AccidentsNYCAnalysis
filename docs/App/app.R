@@ -1,3 +1,6 @@
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
+
 library(shiny)
 library(shinythemes)
 library(bslib)
@@ -19,19 +22,7 @@ library(gdtools)
 library(gfonts)
 library(scales)
 
-# Forzar a que R use C.UTF-8 en el servidor
-# Sys.setenv(LANG = "C.UTF-8")
-# Sys.setlocale("LC_CTYPE", "C.UTF-8")
-# Sys.setlocale("LC_COLLATE", "C.UTF-8")
-# Sys.setlocale("LC_TIME", "C.UTF-8")
-# Sys.setlocale("LC_NUMERIC", "C.UTF-8")
-# Sys.setlocale("LC_MONETARY", "C.UTF-8")
-# Sys.setlocale("LC_MESSAGES", "C.UTF-8")
-# Sys.setlocale("LC_PAPER", "C.UTF-8")
-# Sys.setlocale("LC_MEASUREMENT", "C.UTF-8")
-# options(encoding = "UTF-8")
-
-data_sampled <- read.csv("data_sampled.csv")
+data_sampled <- read.csv("data_sampled.csv", fileEncoding = "UTF-8")
 
 data_sampled <- data_sampled |> 
   mutate(DATE = as.Date(DATE, format = "%Y-%m-%d")) |> 
