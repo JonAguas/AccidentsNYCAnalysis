@@ -1,6 +1,6 @@
-Sys.setenv(LANG = "es_ES.utf8")
-Sys.setlocale("LC_ALL", "es_ES.utf8")
-Sys.setlocale("LC_CTYPE", "es_ES.utf8")
+Sys.setenv(LANG = "C.utf8")
+Sys.setlocale("LC_CTYPE", "C.utf8")
+
 
 library(shiny)
 library(shinythemes)
