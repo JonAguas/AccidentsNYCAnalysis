@@ -1,5 +1,18 @@
+# Sys.setenv(LANG = "es_ES.utf8")
+# Sys.setlocale("LC_ALL", "es_ES.utf8")
+# Sys.setlocale("LC_CTYPE", "es_ES.utf8")
+
 Sys.setenv(LANG = "C.utf8")
 Sys.setlocale("LC_CTYPE", "C.utf8")
+Sys.setlocale("LC_COLLATE", "C.utf8")
+Sys.setlocale("LC_TIME", "C.utf8")
+Sys.setlocale("LC_NUMERIC", "C.utf8")
+Sys.setlocale("LC_MONETARY", "C.utf8")
+Sys.setlocale("LC_MESSAGES", "C.utf8")
+Sys.setlocale("LC_PAPER", "C.utf8")
+Sys.setlocale("LC_MEASUREMENT", "C.utf8")
+options(encoding = "UTF-8")
+
 
 
 library(shiny)
@@ -134,10 +147,10 @@ ui <- tagList(
                    "main_view_viz",
                    "Seleccionar vista:",
                    choices = c(
-                     "Frecuencia de Accidentes \U0001F6A6" = "freq",
-                     "Frecuencia de Accidentes por Distrito \U0001F3D9\uFE0F️" = "freq_bar",
-                     "Heridos vs Muertos \U0001F480 " = "var",
-                     "Frecuencia de Causas \U0001F691" = "causes"
+                     "Frecuencia de Accidentes🚦" = "freq",
+                     "Frecuencia de Accidentes por Distrito 🏙️" = "freq_bar",
+                     "Heridos vs Muertos 💀 " = "var",
+                     "Frecuencia de Causas 🚑" = "causes"
                    ),
                    selected = "freq"
                  ),
@@ -230,8 +243,7 @@ ui <- tagList(
              sidebarLayout(
                sidebarPanel(
                  selectInput("main_view_map", "Seleccionar vista:",
-                             choices = c("Mapa de calor ️\U0001F321\UFE0F" = "hot_map",
-                                         "️Mapa evolutivo \U0001F4C8"= "evolution_map"),
+                             choices = c("Mapa de calor 🌡️" = "hot_map", "️Mapa evolutivo 📈"= "evolution_map"),
                              selected = "hot_map"),
                  
                  conditionalPanel(
@@ -295,9 +307,9 @@ ui <- tagList(
             "main_view_analysis",
             "Seleccionar vista:",
             choices = c(
-              "Análisis Cluster Jerárquico (Distritos) ️\U0001F4A0\UFE0F" = "cluster_dis",
-              "Análisis Cluster Jerárquico (Causas) ️\U0001F4A0\UFE0F️" = "cluster_cau",
-              "Análisis de Correspondencia \U0001F465" = "corresp"
+              "Análisis Cluster Jerárquico (Distritos) 💠️" = "cluster_dis",
+              "Análisis Cluster Jerárquico (Causas) 💠️" = "cluster_cau",
+              "Análisis de Correspondencia 👥" = "corresp"
             ),
             selected = "cluster_dis"
           ),
