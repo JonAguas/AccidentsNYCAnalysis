@@ -91,10 +91,6 @@ theme_nyc <- function() {
 }
 
 ui <- tagList(
-  tags$h3("Diagnóstico de locale y codificación"),
-  verbatimTextOutput("show_locale"),
-  verbatimTextOutput("show_session_info"),
-  hr(),
   
   tags$head(
     tags$meta(charset = "UTF-8"),
@@ -138,10 +134,10 @@ ui <- tagList(
                    "main_view_viz",
                    "Seleccionar vista:",
                    choices = c(
-                     "Frecuencia de Accidentes🚦" = "freq",
-                     "Frecuencia de Accidentes por Distrito 🏙️" = "freq_bar",
-                     "Heridos vs Muertos 💀 " = "var",
-                     "Frecuencia de Causas 🚑" = "causes"
+                     "Frecuencia de Accidentes \U0001F6A6" = "freq",
+                     "Frecuencia de Accidentes por Distrito \U0001F3D9\uFE0F️" = "freq_bar",
+                     "Heridos vs Muertos \U0001F480 " = "var",
+                     "Frecuencia de Causas \U0001F691" = "causes"
                    ),
                    selected = "freq"
                  ),
@@ -234,7 +230,8 @@ ui <- tagList(
              sidebarLayout(
                sidebarPanel(
                  selectInput("main_view_map", "Seleccionar vista:",
-                             choices = c("Mapa de calor 🌡️" = "hot_map", "️Mapa evolutivo 📈"= "evolution_map"),
+                             choices = c("Mapa de calor ️\U0001F321\UFE0F" = "hot_map",
+                                         "️Mapa evolutivo \U0001F4C8"= "evolution_map"),
                              selected = "hot_map"),
                  
                  conditionalPanel(
@@ -298,9 +295,9 @@ ui <- tagList(
             "main_view_analysis",
             "Seleccionar vista:",
             choices = c(
-              "Análisis Cluster Jerárquico (Distritos) 💠️" = "cluster_dis",
-              "Análisis Cluster Jerárquico (Causas) 💠️" = "cluster_cau",
-              "Análisis de Correspondencia 👥" = "corresp"
+              "Análisis Cluster Jerárquico (Distritos) ️\U0001F4A0\UFE0F" = "cluster_dis",
+              "Análisis Cluster Jerárquico (Causas) ️\U0001F4A0\UFE0F️" = "cluster_cau",
+              "Análisis de Correspondencia \U0001F465" = "corresp"
             ),
             selected = "cluster_dis"
           ),
@@ -419,19 +416,6 @@ ui <- tagList(
 
 
 server <- function(input, output, session) {
-  
-  # 1) Mostrar en UI qué locale tiene R
-  output$show_locale <- renderPrint({
-    Sys.getlocale()
-  })
-  # 2) Mostrar sesión completa (para ver LANG, etc.)
-  output$show_session_info <- renderPrint({
-    sessionInfo()
-  })
-  # 3) Mostrar la selección del selectInput
-  output$sel <- renderPrint({
-    paste0("Elegiste: ", input$test_choice)
-  })
   
   observeEvent(input$select_all_freq, {
     updateCheckboxGroupInput(session, "borough_freq", selected = borough_choices)
